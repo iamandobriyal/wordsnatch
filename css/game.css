@@ -1,0 +1,159 @@
+#startGame {
+  display: none;
+}
+.game {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+  width: 100%;
+  height: 100vh;
+}
+.btns {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  height: fit-content;
+  gap: 50px;
+  padding: 10px;
+}
+button {
+  transition: all 0.5s;
+  font-size: 17px;
+  padding: 1ch 2ch;
+  background-color: white;
+  color: #000;
+  font-family: Roboto, sans-serif;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: hsl(0, 0%, 50%);
+  color: #fff;
+  box-shadow: none;
+}
+.waiting{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 10px;
+  align-items: center;
+  justify-content: center;
+
+}
+#letters,
+#selectedLetters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  background-color: gray;
+  margin: 0px 20px;
+  padding: 30px;
+  width: 90vw;
+  height: fit-content;
+}
+
+.letter,
+.selectedLetter {
+  height: 60px;
+  width: 60px;
+  background-color: black;
+  border-radius: 12px;
+  font-size: 35px;
+  text-transform: uppercase;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  cursor: pointer;
+}
+.letter:hover,
+.selectedLetter:hover {
+  background-color: purple;
+}
+#messageLog {
+  display: none;
+  flex-direction: column-reverse; /* Latest message at the bottom */
+  max-height: 100px; /* Adjust based on your needs */
+  overflow: hidden; /* Keep the container clean */
+  width: 100%;
+}
+
+.message {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  color: #fff; /* White text color */
+}
+
+/* Bright color for the current message */
+#currentMessage {
+  background-color: #007bff; /* Blue */
+}
+
+/* Faded style for the previous message */
+.faded {
+  background-color: #007bff;
+  opacity: 0.5; /* Faded appearance */
+}
+
+.leaderboard {
+  display: none;
+  height: 80vh;
+  width: fit-content;
+  min-width: 500px;
+  flex-direction: column;
+  align-items: center;
+  background-color: #808080;
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Adjust position to truly center based on element's size */
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+table {
+  text-align: center;
+  border-collapse: collapse;
+  border: 1px solid white;
+  overflow-y: auto;
+}
+th,
+td {
+  padding: 10px;
+  border: 1px solid white;
+}
+th {
+  background-color: black;
+  color: white;
+}
+#backToGame {
+  width: fit-content;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  box-shadow: none;
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#gameOver{
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+#export{
+  display: none;
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Lobby</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/game.css" />
+  </head>
+  <body>
+    <div class="waiting">
+      <h1>Game Lobby</h1>
+      <p>Waiting for players to join in</p>
+      <div id="gameId"></div>
+      <button id="startGame">Start Game</button>
+      <h3>Players</h3>
+      <div id="players"></div>
+    </div>
+    <div class="game">
+      <div class="btns">
+        <button id="timer"></button>
+        <button id="getletter">Turn in letter</button>
+        <button id="snatch">Snatch It</button>
+        <button id="leaderboard">Leaderboard</button>
+        <button id="score"></button>
+      </div>
+      <div id="messageLog">
+        <div id="previousMessage" class="message faded"></div>
+        <div id="currentMessage" class="message"></div>
+      </div>
+      <div id="letters"></div>
+      <div id="selectedLetters"></div>
+      <div id="words"></div>
+    </div>
+    <div id="gameOver">
+      <h1>Game Over</h1>
+      <p>Thanks for playing</p>
+      <button id="export">Export</button>
+    </div>
+    <div class="leaderboard">
+      <h1>Leaderboard</h1>
+      <table id="leaderboard" rules="all">
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>Score</th>
+            <th>Words</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button id="backToGame">X</button>
+    </div>
+
+    <script src="js/lobby.js"></script>
+  </body>
+</html>

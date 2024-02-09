@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snatch It</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <style>
+    .form {
+      --input-focus: #2d8cf0;
+      --font-color: #323232;
+      --font-color-sub: #666;
+      --bg-color: #fff;
+      --main-color: #323232;
+      padding: 20px;
+      background: lightgrey;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 20px;
+      width: fit-content;
+      border-radius: 5px;
+      border: 2px solid var(--main-color);
+      box-shadow: 4px 4px var(--main-color);
+      margin: 300px auto;
+    }
+
+    .title {
+      color: var(--font-color);
+      font-weight: 900;
+      font-size: 20px;
+    }
+
+    .title span {
+      color: var(--font-color-sub);
+      font-weight: 600;
+      font-size: 17px;
+    }
+
+    .input {
+      width: 250px;
+      height: 40px;
+      border-radius: 5px;
+      border: 2px solid var(--main-color);
+      background-color: var(--bg-color);
+      box-shadow: 4px 4px var(--main-color);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--font-color);
+      padding: 5px 10px;
+      outline: none;
+    }
+
+    .input::placeholder {
+      color: var(--font-color-sub);
+      opacity: 0.8;
+    }
+
+    .input:focus {
+      border: 2px solid var(--input-focus);
+    }
+
+    .button-log:active,
+    .button-confirm:active {
+      box-shadow: 0px 0px var(--main-color);
+      transform: translate(3px, 3px);
+    }
+
+    .button-confirm {
+      margin: 0px auto;
+      width: 120px;
+      height: 40px;
+      border-radius: 5px;
+      border: 2px solid var(--main-color);
+      background-color: var(--bg-color);
+      box-shadow: 4px 4px var(--main-color);
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--font-color);
+      cursor: pointer;
+    }
+  </style>
+  <body>
+    <form class="form" onsubmit="createGame(event)">
+      <div class="title">Welcome,<br /><span>Start a new game</span></div>
+      <input
+        type="text"
+        placeholder="Your Name"
+        name="playername"
+        class="input"
+        required
+      />
+      <input
+        type="number"
+        placeholder="Timer(in minutes)"
+        name="timer"
+        class="input"
+        required
+      />
+      <input
+        type="number"
+        placeholder="Total Letters"
+        name="totalLetters"
+        class="input"
+        required
+      />
+      <button class="button-confirm">Let`s go →</button>
+    </form>
+    <script src="js/game.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
