@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
   const urlParams = new URLSearchParams(window.location.search);
   const gameId = urlParams.get("gameId");
-  const ws = new WebSocket(`ws://localhost:8080`);
+  var wsProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
+  var wsConnectionUrl = wsProtocol + "wordsnatch.pharmascroll.com/ws";
+  var socket = new WebSocket(wsConnectionUrl);
 
   var game;
 
@@ -53,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    if(game.type === "timer"){
+    if (game.type === "timer") {
       document.getElementById("timer").innerText = `Time Left: ${game.timer}`;
     }
 
@@ -78,14 +80,14 @@ document.addEventListener("DOMContentLoaded", () => {
       updatePlayerList(game.players);
     }
 
-    if(game.state === "gameOver"){
+    if (game.state === "gameOver") {
       updatePlayerList(game.players);
       document.querySelector(".waiting").style.display = "none";
       document.querySelector(".game").style.display = "none";
       document.getElementById("messageLog").style.display = "none";
       document.getElementById("gameOver").style.display = "flex";
       document.querySelector(".leaderboard").style.display = "flex";
-      if(game.creator === playerName){
+      if (game.creator === playerName) {
         document.getElementById("export").style.display = "block";
       }
     }
@@ -115,8 +117,10 @@ document.addEventListener("DOMContentLoaded", () => {
     tbody.innerHTML = ""; // Clear current list
     players.forEach((player) => {
       const playerElement = document.createElement("tr");
-      if(player.name===playerName){
-        document.getElementById("score").innerText = `Your Score: ${player.score}`;
+      if (player.name === playerName) {
+        document.getElementById(
+          "score"
+        ).innerText = `Your Score: ${player.score}`;
         playerElement.style.backgroundColor = "green";
       }
       words = player.words.join(", ");
