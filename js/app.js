@@ -8,7 +8,7 @@ function createGame(event) {
   ).value;
   var wsProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
   var wsConnectionUrl = wsProtocol + "wordsnatch.pharmascroll.com/ws";
-  var socket = new WebSocket(wsConnectionUrl);
+  var ws = new WebSocket(wsConnectionUrl);
 
   ws.onopen = () => {
     console.log("WebSocket connection established");
