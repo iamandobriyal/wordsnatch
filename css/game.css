@@ -78,7 +78,7 @@ button:hover {
   flex-direction: column-reverse; /* Latest message at the bottom */
   max-height: 100px; /* Adjust based on your needs */
   overflow: hidden; /* Keep the container clean */
-  width: 100%;
+  width: fit-content;
 }
 
 .message {

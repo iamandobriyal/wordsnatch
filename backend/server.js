@@ -23,6 +23,7 @@ function createGameId(length = 6) {
   return gameId;
 }
 
+// Function to start the timer for a game
 function startTimer(timer, game) {
   var timerInSeconds = timer * 60;
   var interval = setInterval(function () {

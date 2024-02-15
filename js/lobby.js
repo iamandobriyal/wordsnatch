@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const gameId = urlParams.get("gameId");
   var wsProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
   var wsConnectionUrl = wsProtocol + "wordsnatch.pharmascroll.com/ws";
-  var ws = new WebSocket(wsConnectionUrl);
+  var ws = new WebSocket("ws://localhost:8080");
 
   var game;
 
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById(id).remove();
       });
       document.getElementById("messageLog").style.display = "flex";
-      addMessage(`Player ${game.playerName} snatched the word ${game.word}`);
+      addMessage(`${game.playerName} snatched the word ${game.word}`);
       updatePlayerList(game.players);
     }
 
