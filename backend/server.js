@@ -216,7 +216,7 @@ function getRandomLetter() {
   // Include more instances of vowels to increase their selection probability
   const vowels = "aeiou";
   const consonants = "bcdfghjklmnpqrstvwxyz";
-  const enhancedAlphabet = vowels.repeat(5) + consonants; // Adjust repetition to favor vowels
+  const enhancedAlphabet = vowels.repeat(2) + consonants; // Adjust repetition to favor vowels
   const letter = enhancedAlphabet.charAt(
     Math.floor(Math.random() * enhancedAlphabet.length)
   );
