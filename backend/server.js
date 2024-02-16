@@ -111,7 +111,7 @@ wss.on("connection", (ws) => {
             // Optionally, notify other players about the reconnection if needed
           } else {
             // Player is not already in the game, add them as a new player
-            game.players.push({ name: joinPlayerName, score: 0, words: []});
+            game.players.push({ name: joinPlayerName, score: 0, words: [] });
             game.connections[joinPlayerName] = ws;
 
             // Notify all players in the game about the new player
@@ -211,9 +211,15 @@ wss.on("connection", (ws) => {
 });
 
 let letterIdCounter = 0;
+
 function getRandomLetter() {
-  const alphabet = "abcdefghijklmnopqrstuvwxyz";
-  const letter = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+  // Include more instances of vowels to increase their selection probability
+  const vowels = "aeiou";
+  const consonants = "bcdfghjklmnpqrstvwxyz";
+  const enhancedAlphabet = vowels.repeat(5) + consonants; // Adjust repetition to favor vowels
+  const letter = enhancedAlphabet.charAt(
+    Math.floor(Math.random() * enhancedAlphabet.length)
+  );
   // Increment the counter to ensure uniqueness
   letterIdCounter++;
   // Return both the letter and its unique ID

@@ -29,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   ws.onmessage = (event) => {
-    console.log("Message from server ", event.data);
     game = JSON.parse(event.data);
     // Update player list for both game creation and player joining
     if (game.creator === playerName) {
@@ -101,6 +100,40 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("WebSocket connection closed");
   };
 
+  document.addEventListener("keydown", (event) => {
+    // Check for Backspace key press
+    if (event.key === "Backspace") {
+      const selectedLetters = document.querySelectorAll(
+        "#selectedLetters .selectedLetter"
+      );
+      const lastLetter = selectedLetters[selectedLetters.length - 1];
+      if (lastLetter) {
+        removeLetter(lastLetter); // Call removeLetter on the last letter
+      }
+      event.preventDefault(); // Prevent the default backspace action (e.g., navigating back)
+      return;
+    }
+
+    if (event.key === "2") {
+      getLetter();
+    }
+
+    // Existing logic for letter key presses
+    const key = event.key.toLowerCase();
+    if (!key.match(/^[a-z]$/)) {
+      return;
+    }
+
+    const letterElements = document.querySelectorAll("#letters .letter");
+    const letterElement = Array.from(letterElements).find(
+      (element) => element.innerText.toLowerCase() === key
+    );
+
+    if (letterElement) {
+      selectLetter(letterElement);
+    }
+  });
+
   function updatePlayerList(players) {
     const playersList = document.getElementById("players");
     playersList.innerHTML = ""; // Clear current list
@@ -111,7 +144,6 @@ document.addEventListener("DOMContentLoaded", () => {
       playersList.appendChild(playerElement);
     });
     players.sort((a, b) => b.score - a.score);
-    console.log(players);
     const leaderboard = document.querySelector(".leaderboard");
     const tbody = leaderboard.querySelector("tbody");
     tbody.innerHTML = ""; // Clear current list
@@ -144,31 +176,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  document.getElementById("getletter").addEventListener("click", () => {
-    if (game.total === 0) {
-      alert("No more letters left");
+  let canCallGetLetter = true; // Flag to control the call to getLetter
+
+  function getLetter() {
+    if (!canCallGetLetter || game.total === 0) {
+      if (game.total === 0) {
+        alert("No more letters left");
+      }
       return;
     }
+
+    canCallGetLetter = false; // Prevent further calls until timeout is over
     let btn = document.getElementById("getletter");
-    btn.disabled = true; // Disable the button at the start
+    btn.disabled = true;
 
     // Start with 5 seconds for the countdown
     let countdown = 5;
-
-    // Update the button text to show the countdown
     btn.innerText = countdown;
 
-    // Set up an interval to count down every second
     let countdownInterval = setInterval(() => {
-      countdown--; // Decrease the countdown
-      btn.innerText = countdown; // Update the button text with the new countdown value
+      countdown--;
+      btn.innerText = countdown;
 
       if (countdown === 0) {
-        clearInterval(countdownInterval); // Stop the interval
-        btn.innerText = "Turn in letter"; // Reset button text or set to a new text
-        btn.disabled = false; // Enable the button
+        clearInterval(countdownInterval);
+        btn.innerText = `Turn in letter`;
+        btn.disabled = false;
+        canCallGetLetter = true; // Re-enable calling getLetter after timeout
       }
-    }, 1000); // 1000 milliseconds = 1 second
+    }, 1000);
 
     ws.send(
       JSON.stringify({
@@ -177,7 +213,10 @@ document.addEventListener("DOMContentLoaded", () => {
         gameId: gameId,
       })
     );
-  });
+  }
+
+  // Attach the getLetter function as an event listener to the button
+  document.getElementById("getletter").addEventListener("click", getLetter);
 
   // Use querySelectorAll to select all elements with the class "letter" and loop through them to add event listeners
   function selectLetter(element) {
@@ -204,20 +243,37 @@ document.addEventListener("DOMContentLoaded", () => {
     element.remove(); // Remove the clicked element
   }
 
-  document.getElementById("snatch").addEventListener("click", () => {
+  let isSubmissionInProgress = false; // Flag to track submission status
+
+  function processWordSubmission() {
+    if (isSubmissionInProgress) {
+      return; // Exit the function if a submission is already in progress
+    }
+    isSubmissionInProgress = true; // Set the flag to indicate submission is in progress
+
+    const button = document.getElementById("snatch");
+    button.disabled = true; // Disable the button to prevent further interactions
+
     let selectedLetters = document.querySelectorAll(".selectedLetter");
     let word = "";
     selectedLetters.forEach((letter) => {
       word += letter.innerText;
     });
+
     if (word.length < 3) {
       alert("Word must be at least 3 letters long");
+      isSubmissionInProgress = false; // Reset the flag
+      button.disabled = false; // Re-enable the button if the condition fails
       return;
     }
-    if (word == "") {
+
+    if (word === "") {
       alert("No letters selected");
+      isSubmissionInProgress = false; // Reset the flag
+      button.disabled = false; // Re-enable the button if the condition fails
       return;
     }
+
     fetch("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
       .then((response) => response.json())
       .then((data) => {
@@ -238,7 +294,27 @@ document.addEventListener("DOMContentLoaded", () => {
             })
           );
         }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("An error occurred");
+      })
+      .finally(() => {
+        isSubmissionInProgress = false; // Reset the flag
+        button.disabled = false; // Re-enable the button after processing
       });
+  }
+
+  // Click event listener for the button
+  document
+    .getElementById("snatch")
+    .addEventListener("click", processWordSubmission);
+
+  // Key event listener for the document or an input field
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      processWordSubmission();
+    }
   });
 
   function addMessage(newMessage) {
