@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const gameId = urlParams.get("gameId");
   var wsProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
   var wsConnectionUrl = wsProtocol + "wordsnatch.pharmascroll.com/ws";
-  var ws = new WebSocket("ws://localhost:8080");
+  var ws = new WebSocket(wsConnectionUrl);
 
   var game;
 
