@@ -172,7 +172,6 @@ wss.on("connection", (ws) => {
               })
             );
           });
-          console.log(`New letter: ${letter}`);
         }
         break;
 

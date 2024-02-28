@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const gameId = urlParams.get("gameId");
   var wsProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
   var wsConnectionUrl = wsProtocol + "wordsnatch.pharmascroll.com/ws";
-  var ws = new WebSocket(wsConnectionUrl);
+  var ws = new WebSocket("ws://localhost:8080");
 
   var game;
 
@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (countdown === 0) {
         clearInterval(countdownInterval);
-        btn.innerText = `Turn in letter`;
+        btn.innerText = `Turn in letter${game.total}`;
         btn.disabled = false;
         canCallGetLetter = true; // Re-enable calling getLetter after timeout
       }
